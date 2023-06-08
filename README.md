@@ -5,28 +5,28 @@ A lightweight Godot library for code generation from template (or just for any g
 You can generate output (e.g. script):
 - From a source template file containing tags
 - According to generator specification, where you describe the tags
-- Using a context (any object), which provides to subtitution for the tags 
+- Using a context (any object), which provides subtitutions for the tags 
 
 Driving force:
 - Was needed for this: https://github.com/coderbloke/godot-inspector-architect<br>
   Code snippets coming from different places, they put together into a script, which then can be loaded and used dynamically on-the-fly
-- It turned out to be a quite neat reusable, even int he early phase
-  Can be help usefull for anyone
+- It turned out to be a quite neat reusable, even in the early phase
+  Can be help useful for anyone
   
 Contact:
 - Indicate/share your presence, interest, ideas, give inspiration, or ask here:<br>
   [ https://github.com/coderbloke/godot-code-generator/discussions/5 ](https://github.com/coderbloke/godot-code-generator/discussions/5)
-- See already existing plans/progress/issues, suggest or indiate new ones here:<br>
+- See already existing plans/progress/issues, suggest or indicate new ones here:<br>
   https://github.com/coderbloke/godot-code-generator/issues
 
 Usage
 --
 
-1. Make source tample files. Put tags into it, where you want text substitution. (First image / Left side)<br>
+1. Make source template files. Put tags into it, where you want text substitution. (First image / Left side)<br>
    Tags don't have any predefined form. They are just simple tags you define later, so you don't have to follow the below example.<br>
    
-   With possibilty of different way of handling comment and prefixes by the generator, it is possible to make such a template file,<br>
-   which is syntactically/semantically a correct source file, so won't be full of compiler errors for example.
+   With possibility of different way of handling comment and prefixes by the generator, it is possible to make such a template file,<br>
+   which is syntactically/semantically a correct source file, so won't be full of compiler errors, for example.
    
 2. Make a`CodeGeneratorSpecification` specification resource. (First image / Right side)<br>
    Define your tags (any text, no fixed format). Specify how the generator should handle the surrounding of the tags.
@@ -34,28 +34,28 @@ Usage
    Pull/set the source template file (Template property)
    
 3. Implement the methods in your class, which will serve as context for the generator.<br>
-   Currently these are simple function returning string (as not yet other feature in the generator yet, which would require else.)
-   Built your text in this functions. You don't have to care about the indentification outside the tags.
-   Just deal with the indentification of your snippets. The generator will extend the indentification according to the source template.
-   (Currently you have to use tabs or spaces as they will be required in the out file. But auto converting ident format is planned.)
+   Currently, these are simple function returning string (as not yet other feature in the generator yet, which would require else.)
+   Built your text in these functions. You don't have to care about the indentification outside the tags.
+   Just deal with the indents of your snippets. The generator will extend the indents according to the source template.
+   (Currently, you have to use tabs or spaces, as they will be required in the out file. But auto converting indent format is planned.)
    Just start and try, the generator will put error messages in the output, if it does not find the method.
    
 4. Bring the pieces together, and get the generated output with<br>`CodeGenerator.generate_source_code(code_generator_specification, context)`.
    
-   Use the output as you need. For example like this:
+   Use the output as you need. For example, like this:
    ````gdscript
-   var code_generator_specification = load("res://your_generator_specification")
+   var code_generator_specification = load("res://your_generator_specification.tscn")
    var source_code = CodeGenerator.generate_source_code(code_generator_specification, self)
    if not source_code.is_empty():
        var script := GDScript.new()
        script.source_code = source_code
        script.reload()
    ````
-   In this example `self` is the context, so the action methods are in the same script.
+   In this example, `self` is the context, so the action methods are in the same script.
    Then you can simply add this script to any object, node as you want. Engine will handle, nothing to do with the generator no more. 
    
 5. Resource `changed` signal as used and propagated up to the `CodeGeneratorSpecification`. Triggered by any change in the specification or the template.
-   Using that to auto-update according to your nees. E.g.: `code_generator_specification.changed.connect(_update_script)`
+   Using that to auto-update according to your needs. E.g.: `code_generator_specification.changed.connect(_update_script)`
 
 Example template and generator specification:
 
@@ -65,7 +65,7 @@ See example usage below of the above template and generator spec during developm
 
 Here the `context`, which implemented the action methods (like `_get_declaration`, `_get_initialization`), which collected code snippets from a resource file (on the right).<br>
 See the output result (right side). You can see the tags substituted with the provided texts.
-The function returned the text as simple multiline string, starting with 0 level ident.
+The function returned the text as a simple multiline string, starting with 0 level indent.
 You can also see examples for error message for the context functions, which were not yet present.
 
    ![wVzVnVIpjR](https://github.com/coderbloke/godot-inspector-architect/assets/75695649/51507006-5cdf-4627-be23-8c5ba2f58c38)
