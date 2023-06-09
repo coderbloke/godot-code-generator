@@ -6,11 +6,17 @@ class_name CodeGeneratorTemplateAction extends Object
 		if new_value != tag:
 			tag = new_value
 			emit_changed()
-			
+
 @export var close_tag: String:
 	set(new_value):
 		if new_value != close_tag:
 			close_tag = new_value
+			emit_changed()
+
+@export var keep_tag_in_output: bool:
+	set(new_value):
+		if new_value != keep_tag_in_output:
+			keep_tag_in_output = new_value
 			emit_changed()
 
 @export var action_type: CodeGenerator.ActionType:

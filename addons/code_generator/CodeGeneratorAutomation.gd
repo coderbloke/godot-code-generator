@@ -61,7 +61,6 @@ func _get_property_list():
 	return properties
 
 func _set(property: StringName, value: Variant):
-	print("[_set] " + property)
 	if property == "target_file_count":
 		if value != target_files.size():
 			target_files.resize(value)
