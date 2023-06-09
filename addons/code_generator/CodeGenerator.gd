@@ -1,6 +1,12 @@
 @tool
 class_name CodeGenerator extends Object
 
+enum ActionType {
+	NORMAL,
+	CONDITIONAL,
+	ITERATOR,
+}
+
 enum CommentHandling {
 	REMOVE_AND_STRIP_WHITESPACES,
 	REMOVE_AND_KEEP_WHITESPACES,
