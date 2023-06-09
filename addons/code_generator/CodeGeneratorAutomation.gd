@@ -61,17 +61,20 @@ func _get_property_list():
 	return properties
 
 func _set(property: StringName, value: Variant):
-	if property == "target_file_count" and value != target_files.size():
-		target_files.resize(value)
-		property_list_changed.emit()
+	print("[_set] " + property)
+	if property == "target_file_count":
+		if value != target_files.size():
+			target_files.resize(value)
+			property_list_changed.emit()
 	elif property.begins_with("target_file_"):
 		var property_path := property.split("/")
 		if property_path[1] == "path":
 			var i := property_path[0].trim_suffix("target_file_").to_int()
 			target_files[i] = value
-	elif property == "trigger_resource_count" and value != trigger_resources.size():
-		trigger_resources.resize(value)
-		property_list_changed.emit()
+	elif property == "trigger_resource_count":
+		if value != trigger_resources.size():
+			trigger_resources.resize(value)
+			property_list_changed.emit()
 	elif property.begins_with("trigger_resource_"):
 		var property_path := property.split("/")
 		if property_path[1] == "resource":
